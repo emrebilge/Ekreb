@@ -27,7 +27,10 @@ function GamePage() {
   const fetchRandomWord = async () => {
     try {
       const response = await axios.get('http://localhost:5551/get_word'); // Make a GET request to the backend
+      
       const randomWord = response.data.scrambledWord;
+      console.log(randomWord);
+
       setWord(randomWord);
     } catch (error) {
       console.error('Error fetching word:', error);
@@ -45,7 +48,7 @@ function GamePage() {
     <div className="game-container">
       <h2 className="game-title">Guess the Word:</h2>
       <div className="game-content">
-        <p className="scrambled-word">Scrambled Word: {setWord}</p>
+        <p className="scrambled-word">Scrambled Word: {word}</p>
         <input
           type="text"
           className="guess-input"
