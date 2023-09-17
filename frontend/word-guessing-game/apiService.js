@@ -7,7 +7,7 @@ function MyComponent() {
   useEffect(() => {
     const fetchWord = async () => {
       try {
-        const response = await axios.get('../backend/index.js/get_word');
+        const response = await axios.get('http://localhost:5551//get_word');
         setScrambledWord(response.data.scrambledWord);
       } catch (error) {
         console.error(error);

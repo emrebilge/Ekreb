@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const app = express();
-const PORT = 3000;
+const PORT = 5551;
 
 app.use(cors());
 
@@ -17,6 +17,7 @@ let words = [];
 async function fetchRandomWord() {
   try {
     const response = await axios.get(`${baseURL}`);
+    console.log(response.data);
     return response.data; // Extract the first word from the API response array
   } catch (error) {
     throw error; // Handle errors as needed
@@ -42,7 +43,7 @@ app.get('/get_word', async (req, res) => {
   try {
     const randomWord = await fetchRandomWord(); // Fetch a random word using the API
     const scrambledWord = scrambleWord(randomWord); // Scramble the word
-
+    console.log(scrambledWord);
     res.json({ scrambledWord });
   } catch (error) {
     console.error(error);

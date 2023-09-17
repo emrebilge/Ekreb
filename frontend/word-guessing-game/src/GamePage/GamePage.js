@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Import axios for API calls
 import './GamePage.css'; // Import the CSS file for this component
 
 function GamePage() {
@@ -12,7 +13,7 @@ function GamePage() {
     // Implement your logic to check if the guess is correct
     // Update score, word, and feedback accordingly
     // For demonstration purposes, we'll assume that "banana" is the correct word
-    if (guess.toLowerCase() === 'banana') {
+    if (guess.toLowerCase() === word) {
       setScore(score + 1);
       setFeedback('Correct! Well done.');
       fetchRandomWord(); // Fetch a new word
@@ -22,15 +23,21 @@ function GamePage() {
     setGuess(''); // Clear the input field
   };
 
-  // Function to fetch a random word (replace this with your actual API call)
+  // Function to fetch a random word from the backend
   const fetchRandomWord = async () => {
-    // Simulate API call
-    const randomWord = 'scrambled';
-    setWord(randomWord);
+    try {
+      const response = await axios.get('http://localhost:5551/get_word'); // Make a GET request to the backend
+      const randomWord = response.data.scrambledWord;
+      setWord(randomWord);
+    } catch (error) {
+      console.error('Error fetching word:', error);
+    }
   };
 
+  
+
   // Initial word fetch when the component loads
-  useState(() => {
+  useEffect(() => {
     fetchRandomWord();
   }, []);
 
@@ -38,7 +45,7 @@ function GamePage() {
     <div className="game-container">
       <h2 className="game-title">Guess the Word:</h2>
       <div className="game-content">
-        <p className="scrambled-word">Scrambled Word: {word}</p>
+        <p className="scrambled-word">Scrambled Word: {setWord}</p>
         <input
           type="text"
           className="guess-input"
