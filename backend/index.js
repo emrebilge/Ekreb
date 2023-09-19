@@ -15,37 +15,34 @@ let correct = 0;
 let currentWord = '';
 let correctWords = [];
 
-// Function to fetch a random word from the API
 async function fetchRandomWord() {
   try {
     const response = await axios.get(`${baseURL}`);
     console.log(response.data);
-    currentWord = response.data;
-    words.push(response.data);
     return response.data; // Extract the first word from the API response array
   } catch (error) {
     throw error; // Handle errors as needed
   }
 }
 
-// Function to scramble a word (replace this with your actual scramble logic)
+
 // Function to scramble a word (replace this with your actual scramble logic)
 function scrambleWord(word) {
-    // Implement your word scrambling logic here
-    // For example, you can shuffle the characters in the word
-    word = word[0];
-    const shuffledWord = word.split('').sort(() => Math.random() - 0.5).join('');
-    return shuffledWord;
+  word = word[0];
+  const shuffledWord = word.split('').sort(() => Math.random() - 0.5).join('');
+  return shuffledWord;
 }
+
   
 // send the score endpoint
 app.get('/score', (req, res) => {
-  res.json({ score });
+  res.send({ score });
 });
 
 app.get('/get_word', async (req, res) => {
   try {
     const randomWord = await fetchRandomWord(); // Fetch a random word using the API
+    console.log(randomWord);
     const scrambledWord = scrambleWord(randomWord); // Scramble the word
     console.log(scrambledWord);
     res.json({ scrambledWord });
@@ -53,10 +50,6 @@ app.get('/get_word', async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Error fetching a random word from the API' });
   }
-});
-
-app.get('/score', (req, res) => {
-  res.send(`${score}`);
 });
 
 // Endpoint to update the score
