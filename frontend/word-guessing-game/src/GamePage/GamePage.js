@@ -74,6 +74,28 @@ function GamePage() {
     }
   };
   
+  const handleReset = async () => {
+    try {
+      // Send a reset request to the backend
+      await axios.post('http://localhost:5551/reset_game');
+  
+      // Reset frontend state
+      setScore(0);
+      setGuess('');
+      setWord('');
+      setFeedback('');
+      setAccuracy(0.0); // You might want to reset accuracy to its initial value
+      // ... Reset other state variables
+  
+      // Fetch a new word
+      await fetchRandomWord();
+    } catch (error) {
+      console.error('Error resetting game:', error);
+      // Handle error if necessary
+    }
+  };
+  
+  
   
 
   return (
@@ -111,6 +133,9 @@ function GamePage() {
       </p>
       <button className="button" onClick={handleSkip}>
          Skip Word
+      </button>
+      <button className="button reset-button" onClick={handleReset}>
+        Reset Game
       </button>
     </div>
   );  

@@ -1,3 +1,27 @@
+/* Add this style to your GamePage.css file */
+.reset-button {
+  background-color: #ff5722; /* Change the background color as desired */
+  color: #fff; /* Text color */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  /* Add box shadow for a cool effect */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.reset-button:hover {
+  background-color: #d84315; /* Change the hover background color as desired */
+}
+
+.reset-button {
+  margin-left: 16px; /* Add your desired margin value */
+}
+
+
 .button{
   background-color: #007bff; /* Blue background color */
   color: #fff; 
