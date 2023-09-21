@@ -11,9 +11,11 @@ const baseURL = 'https://random-word-api.herokuapp.com/word';
 
 let score = 0;
 let guesses = 0;
-let correct = 0;
+let correct = 0; 
 let currentWord = '';
 let correctWords = [];
+
+let accuracy = 0;
 
 async function fetchRandomWord() {
   try {
@@ -31,7 +33,6 @@ function scrambleWord(word) {
   const shuffledWord = word.split('').sort(() => Math.random() - 0.5).join('');
   return shuffledWord;
 }
-
   
 // send the score endpoint
 app.get('/score', (req, res) => {
@@ -50,37 +51,32 @@ app.get('/get_word', async (req, res) => {
   }
 });
 
-// Endpoint to update the score
-app.patch('/score', (req, res) => {
-  const val = parseInt(req.query.val);
-  
-  if (!isNaN(val)) { // check if val is a valid number
-      score += val;
-      res.status(200).json({ score });
-    } else {
-      res.status(400).json({ message: 'Invalid score value' });
-    }
-});
-
 app.post('/validate', (req, res) => {
   console.log(currentWord);
   try {
     const userGuess = req.body.guess;
     guesses += 1;
+    accuracy = correct/guesses * 100;
     console.log(currentWord[0]);
+    console.log(accuracy);
+    console.log(correct/guesses * 100);
+    console.log(correct);
+    console.log(guesses);
+  
     console.log(userGuess.toLowerCase() === currentWord[0].toLowerCase());
     if (userGuess.toLowerCase() === currentWord[0].toLowerCase()) {
       score += 10;
       correct += 1;
       correctWords.push(currentWord[0]);
+      accuracy = ((correct/guesses) * 100).toFixed(2);
       res.status(200).send({
         score,
-        message: 'Correct guess',
+        message: 'Correct guess', accuracy
       });
     } else {
       res.status(200).send({
         score,
-        message: 'Incorrect guess',
+        message: 'Incorrect guess', accuracy
       });
     }
   } catch (error) {
@@ -103,11 +99,12 @@ app.post('/reset_game', (req, res) => {
   res.json({ message: 'Game reset successfully' });
 });
 
-// retrieve the accuracy
+// Retrieve the accuracy
 app.get('/accuracy', (req, res) => {
-  const accuracy = (correct / guesses) * 100;
+  accuracy = correct/guesses * 100;
   res.send({ accuracy });
 });
+
 
 
 app.listen(PORT, () => {

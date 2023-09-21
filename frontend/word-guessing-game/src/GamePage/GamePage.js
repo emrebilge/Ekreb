@@ -8,7 +8,7 @@ function GamePage() {
   const [guess, setGuess] = useState('');
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState('');
-  const [accuracy, setAccuracy] = useState(0);
+  const [accuracy, setAccuracy] = useState(0.00);
   const [showRules, setShowRules] = useState(false);
 
 
@@ -21,20 +21,19 @@ function GamePage() {
         guess: guess,
       });
   
-      // Assuming the backend responds with the updated score
+      // Assuming the backend responds with the updated score and accuracy
       setScore(response.data.score);
-  
+      setAccuracy(response.data.accuracy);  
       if (response.data.message === 'Correct guess') {
-        setFeedback('Correct! Well done.');
-      } else {
-        setFeedback('Incorrect. Try again.');
-      }      
-  
-      // Calculate accuracy
-      const correctCount = response.data.correctCount;
-      const totalGuesses = response.data.totalGuesses;
-      const calculatedAccuracy = (correctCount / totalGuesses) * 100;
-      setAccuracy(calculatedAccuracy.toFixed(2)); // Limit to 2 decimal places
+        setFeedback('Correct! Well done.');  
+        // Wait for 3 seconds, then fetch a new word
+        setTimeout(() => {
+        fetchRandomWord();
+         setFeedback(''); // Clear the feedback
+        }, 2500);
+} else {
+      setFeedback('Incorrect. Try again.');
+}
     } catch (error) {
       // Handle error here
       console.error('Error submitting guess:', error);
@@ -42,9 +41,7 @@ function GamePage() {
     }
     setGuess('');
   };
-
   
-
   const fetchRandomWord = async () => {
     try {
       const response = await axios.get('http://localhost:5551/get_word');
@@ -55,7 +52,6 @@ function GamePage() {
     }
   };
   
-  
   useEffect(() => {
     fetchRandomWord();
   }, []);
@@ -65,9 +61,8 @@ function GamePage() {
   };
 
   return (
-    <div className="game-container">
-      <button onClick={toggleRules}>Show Rules</button>
-      {showRules && <Rules />} {/* Render Rules component when showRules is true */}
+<div className="game-container">
+  <Rules showRules={showRules} toggleRules={toggleRules} />
       <header className="game-header">
         <h1>Ekreb</h1>
       </header>
@@ -86,6 +81,10 @@ function GamePage() {
             Submit Guess
           </button>
         </div>
+        <div className="accuracy-card">
+          <h2 className="accuracy-title">Accuracy:</h2>
+          <p className="accuracy">{accuracy}%</p>
+       </div>
         <div className="score-card">
           <h2 className="score-title">Score:</h2>
           <p className="score">{score}</p>
