@@ -17,11 +17,10 @@ function GamePage() {
       const response = await axios.post('http://localhost:5551/validate', {
         guess: guess,
       });
-  
-      // Assuming the backend responds with the updated score and correct count
+      console.log(guess);
+      
       setScore(response.data.score);
-      setFeedback('Correct! Well done.');
-  
+    
       // Calculate accuracy
       const correctCount = response.data.correctCount;
       const totalGuesses = response.data.totalGuesses;
@@ -45,7 +44,6 @@ function GamePage() {
       console.error('Error fetching word:', error);
     }
   };
-  
   
   
   useEffect(() => {

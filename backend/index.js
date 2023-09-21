@@ -21,10 +21,9 @@ async function fetchRandomWord() {
     console.log(response.data);
     return response.data; // Extract the first word from the API response array
   } catch (error) {
-    throw error; // Handle errors as needed
+    throw error;
   }
 }
-
 
 // Function to scramble a word (replace this with your actual scramble logic)
 function scrambleWord(word) {
@@ -42,9 +41,8 @@ app.get('/score', (req, res) => {
 app.get('/get_word', async (req, res) => {
   try {
     const randomWord = await fetchRandomWord(); // Fetch a random word using the API
-    console.log(randomWord);
     const scrambledWord = scrambleWord(randomWord); // Scramble the word
-    console.log(scrambledWord);
+    currentWord = randomWord;
     res.json({ scrambledWord });
   } catch (error) {
     console.error(error);
@@ -54,8 +52,8 @@ app.get('/get_word', async (req, res) => {
 
 // Endpoint to update the score
 app.patch('/score', (req, res) => {
-    const val = parseInt(req.query.val);
-    
+  const val = parseInt(req.query.val);
+  
   if (!isNaN(val)) { // check if val is a valid number
       score += val;
       res.status(200).json({ score });
@@ -64,17 +62,24 @@ app.patch('/score', (req, res) => {
     }
 });
 
-// Endpoint to validate the data.
 app.post('/validate', (req, res) => {
-  const userGuess = req.body.guess;
-  guesses += 1;
-  if(userGuess.toLowerCase() === currentWord.toLowerCase()) {
-    score += 10;
-    correct += 1;
-    correctWords.push(currentWord);
-    res.status(200).json({ score });
-  }else{
-    res.status(400).json({ message: 'Incorrect guess. Try again.', correctWord });
+  console.log(currentWord);
+  try {
+    const userGuess = req.body.guess;
+    guesses += 1;
+    console.log(currentWord[0]);
+    console.log(userGuess.toLowerCase() === currentWord[0].toLowerCase());
+    if (userGuess.toLowerCase() === currentWord[0].toLowerCase()) {
+      score += 10;
+      correct += 1;
+      correctWords.push(currentWord[0]);
+      res.send({ score });
+    } else {
+      res.send({ message: 'Incorrect guess. Try again.' });
+    }
+  } catch (error) {
+    console.error('Error in /validate:', error);
+    res.status(500).send({ message: 'Internal Server Error' });
   }
 });
 
