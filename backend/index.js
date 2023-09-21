@@ -9,11 +9,13 @@ app.use(express.json());
 
 const baseURL = 'https://random-word-api.herokuapp.com/word';
 
+let round = 1;
 let score = 0;
 let guesses = 0;
 let correct = 0; 
 let currentWord = '';
 let correctWords = [];
+let skipped = 0;
 
 let accuracy = 0;
 
@@ -44,7 +46,7 @@ app.get('/get_word', async (req, res) => {
     const randomWord = await fetchRandomWord(); // Fetch a random word using the API
     const scrambledWord = scrambleWord(randomWord); // Scramble the word
     currentWord = randomWord;
-    res.json({ scrambledWord });
+    res.send({ scrambledWord });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error fetching a random word from the API' });
@@ -52,11 +54,11 @@ app.get('/get_word', async (req, res) => {
 });
 
 app.post('/validate', (req, res) => {
-  console.log(currentWord);
+  console.log(req.body.guess);
   try {
     const userGuess = req.body.guess;
     guesses += 1;
-    accuracy = correct/guesses * 100;
+    accuracy = ((correct / guesses) * 100).toFixed(2); // Convert to string
     console.log(currentWord[0]);
     console.log(accuracy);
     console.log(correct/guesses * 100);
@@ -68,11 +70,12 @@ app.post('/validate', (req, res) => {
       score += 10;
       correct += 1;
       correctWords.push(currentWord[0]);
-      accuracy = ((correct/guesses) * 100).toFixed(2);
+      accuracy = ((correct / guesses) * 100).toFixed(2); // Convert to string
       res.status(200).send({
         score,
         message: 'Correct guess', accuracy
       });
+      round = round + 1;
     } else {
       res.status(200).send({
         score,
@@ -85,10 +88,32 @@ app.post('/validate', (req, res) => {
   }
 });
 
+app.post('/skip_word', async (req, res) => {
+  try {
+    // Make an HTTP GET request to the /get_word endpoint
+    const response = await axios.get('http://localhost:5551/get_word');
+    
+    // Extract the scrambled word from the response
+    const scrambledWord = response.data.scrambledWord;
+
+    skipped += 1;
+    // Update the currentWord and increase guesses
+
+    guesses += 1;
+    accuracy = ((correct / guesses) * 100).toFixed(2); // Convert to string
+
+    res.status(200).send({ scrambledWord, accuracy});
+  } catch (error) {
+    console.error('Error in /skip_word:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 
 app.get('/correct_words', (req, res) => {
   res.send({ correctWords });
 });
+
 
 // end point to reset the game after the game is over 
 app.post('/reset_game', (req, res) => {
@@ -101,10 +126,9 @@ app.post('/reset_game', (req, res) => {
 
 // Retrieve the accuracy
 app.get('/accuracy', (req, res) => {
-  accuracy = correct/guesses * 100;
+  accuracy = ((correct / guesses) * 100).toFixed(2); // Convert to string
   res.send({ accuracy });
 });
-
 
 
 app.listen(PORT, () => {
