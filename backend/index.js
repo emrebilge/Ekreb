@@ -98,7 +98,7 @@ app.post('/skip_word', async (req, res) => {
 
     skipped += 1;
     // Update the currentWord and increase guesses
-
+    round += 1;
     guesses += 1;
     accuracy = ((correct / guesses) * 100).toFixed(2); // Convert to string
 
@@ -118,11 +118,16 @@ app.get('/correct_words', (req, res) => {
 // end point to reset the game after the game is over 
 app.post('/reset_game', (req, res) => {
   score = 0;
-  correct = 0;
+  accuracy = 0.00;
   guesses = 0;
+  currentWord = '';
   correctWords = [];
+  round = 1;
+  skipped = 0;
+  correct = 0;
   res.json({ message: 'Game reset successfully' });
 });
+
 
 // Retrieve the accuracy
 app.get('/accuracy', (req, res) => {
