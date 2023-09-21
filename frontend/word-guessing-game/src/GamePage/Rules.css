@@ -1,30 +1,22 @@
-/* Rules.css */
-/* CSS for the Show Rules button */
-.rules1 {
-  background-color: #007bff; /* Button background color */
-  color: #fff; /* Button text color */
-  border: none; /* Remove button border */
-  padding: 10px 20px; /* Add padding for better spacing */
-  font-size: 16px; /* Font size */
+.rules1{
+  background-color: #007bff; /* Blue background color */
+  color: #fff; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px;
   cursor: pointer; /* Show pointer cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
-  border-radius: 15px;
+  font-size: 16px; /* Font size */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow */
+  transition: box-shadow 0.3s ease; /* Add a transition for smoother hover effect */
 }
 
-.rules1:hover {
-  background-color: #0056b3; /* Darker background color on hover */
-  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
-}
+.rules1:hover{
+  background-color: #0056b3; /* Darker blue on hover */
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */}
 
-/* Style for the Hide Rules button (when rules are shown) */
-.rules1.hide {
-  background-color: rgb(110, 174, 252); /* Red background color */
-}
-
-/* Style for the Show Rules button (when rules are hidden) */
-.rules1.show {
-  background-color: rgb(41, 112, 255); /* Blue background color */
-}
+.rules1.hide{
+    background-color: rgb(110, 174, 252); /* Red background color */
+  }
 
 .rules-container {
     background-color: #ffffff;

@@ -1,4 +1,22 @@
-/* GamePage.css */
+.button{
+  background-color: #007bff; /* Blue background color */
+  color: #fff; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer; /* Show pointer cursor on hover */
+  font-size: 16px; /* Font size */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow */
+  transition: box-shadow 0.3s ease; /* Add a transition for smoother hover effect */}
+
+.button:hover{
+  background-color: #0056b3; /* Darker blue on hover */
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
+}
+
+.button.hide{
+  background-color: rgb(110, 174, 252); /* Red background color */
+}
 
 
 .green {
@@ -70,22 +88,6 @@
   border: 1px solid #ccc; /* Light gray border */
   border-radius: 5px;
   font-size: 16px;
-}
-
-/* Submit button styles */
-.submit-button {
-  background-color: #3498db; /* Blue button background */
-  color: #fff; /* White button text */
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-  background-color: #2980b9; /* Darker blue on hover */
 }
 
 /* Score card styles */

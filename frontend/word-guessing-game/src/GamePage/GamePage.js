@@ -23,14 +23,15 @@ function GamePage() {
   
       // Assuming the backend responds with the updated score and accuracy
       setScore(response.data.score);
-      setAccuracy(response.data.accuracy);  
+      setAccuracy(response.data.accuracy); 
+       
       if (response.data.message === 'Correct guess') {
         setFeedback('Correct! Well done.');  
         // Wait for 3 seconds, then fetch a new word
         setTimeout(() => {
         fetchRandomWord();
          setFeedback(''); // Clear the feedback
-        }, 2500);
+        }, 2000);
     } else {
       setFeedback('Incorrect. Try again.');
     }
@@ -44,6 +45,8 @@ function GamePage() {
   
   const fetchRandomWord = async () => {
     try {
+          // setFeedback(''); // Clear feedback
+
       const response = await axios.get('http://localhost:5551/get_word');
       const randomWord = response.data.scrambledWord;
       setWord(randomWord); // Set the retrieved word in the state
@@ -59,6 +62,19 @@ function GamePage() {
   const toggleRules = () => {
     setShowRules(!showRules);
   };
+
+  const handleSkip = async () => {
+    try {
+      const response = await axios.post('http://localhost:5551/skip_word');
+
+      setWord(response.data.scrambledWord);
+      setAccuracy(response.data.accuracy);
+    } catch (error) {
+      console.error('Error skipping word:', error);
+    }
+  };
+  
+  
 
   return (
 <div className="game-container">
@@ -77,13 +93,13 @@ function GamePage() {
             value={guess}
             onChange={(e) => setGuess(e.target.value)}
           />
-          <button className="submit-button" onClick={handleSubmitGuess}>
+          <button className="button" onClick={handleSubmitGuess}>
             Submit Guess
           </button>
         </div>
         <div className="accuracy-card">
           <h2 className="accuracy-title">Accuracy:</h2>
-          <p className="accuracy">{accuracy.toFixed(2)}%</p>
+          <p className="accuracy">{accuracy}%</p>
        </div>
         <div className="score-card">
           <h2 className="score-title">Score:</h2>
@@ -93,6 +109,9 @@ function GamePage() {
       <p className="feedback-message" style={{ color: feedbackClass }}>
         {feedback}
       </p>
+      <button className="button" onClick={handleSkip}>
+         Skip Word
+      </button>
     </div>
   );  
 }
