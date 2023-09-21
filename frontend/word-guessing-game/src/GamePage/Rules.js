@@ -1,9 +1,10 @@
 import React from 'react';
+import './Rules.css';
 
 function Rules({ showRules, toggleRules }) {
   return (
     <div className="rules-container">
-      <button onClick={toggleRules}>
+      <button class={`rules1 ${showRules ? 'hide' : 'show'}`} onClick={toggleRules}>
         {showRules ? 'Hide Rules' : 'Show Rules'}
       </button>
       {showRules && (

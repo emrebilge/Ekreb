@@ -31,9 +31,9 @@ function GamePage() {
         fetchRandomWord();
          setFeedback(''); // Clear the feedback
         }, 2500);
-} else {
+    } else {
       setFeedback('Incorrect. Try again.');
-}
+    }
     } catch (error) {
       // Handle error here
       console.error('Error submitting guess:', error);
@@ -83,7 +83,7 @@ function GamePage() {
         </div>
         <div className="accuracy-card">
           <h2 className="accuracy-title">Accuracy:</h2>
-          <p className="accuracy">{accuracy}%</p>
+          <p className="accuracy">{accuracy.toFixed(2)}%</p>
        </div>
         <div className="score-card">
           <h2 className="score-title">Score:</h2>
