@@ -73,15 +73,22 @@ app.post('/validate', (req, res) => {
       score += 10;
       correct += 1;
       correctWords.push(currentWord[0]);
-      res.send({ score });
+      res.status(200).send({
+        score,
+        message: 'Correct guess',
+      });
     } else {
-      res.send({ message: 'Incorrect guess. Try again.' });
+      res.status(200).send({
+        score,
+        message: 'Incorrect guess',
+      });
     }
   } catch (error) {
     console.error('Error in /validate:', error);
     res.status(500).send({ message: 'Internal Server Error' });
   }
 });
+
 
 app.get('/correct_words', (req, res) => {
   res.send({ correctWords });
