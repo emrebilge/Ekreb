@@ -1,71 +1,90 @@
-/* WelcomeScreen.css */
-
+/* Welcome screen container */
 .welcome-screen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
-    z-index: 1000; /* Ensure the welcome screen is on top */
-    transition: opacity 0.3s ease;
-    opacity: 0;
-    pointer-events: none; /* Initially not clickable */
-  }
-  
-  .welcome-screen.show {
-    opacity: 1; /* Fade in when shown */
-    pointer-events: auto; /* Allow interaction */
-  }
-  
-  .welcome-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-  
-  .welcome-content h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .welcome-content h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #555;
-  }
-  
-  .welcome-content ul {
-    list-style-type: disc;
-    padding-left: 20px;
-    text-align: left;
-    margin-bottom: 20px;
-  }
-  
-  .welcome-content li {
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: #777;
-  }
-  
-  .play-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .play-button:hover {
-    background-color: #0056b3;
-  }
-  
+  background-color: #fff; /* White background */
+  padding: 20px;
+  border-radius: 5px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Hide the welcome screen by default */
+.welcome-screen.hide {
+  display: none;
+}
+
+/* Welcome screen content */
+.welcome-content {
+  margin: 0 auto; /* Center content horizontally */
+  max-width: 400px; /* Set the maximum width of the content */
+}
+
+/* Welcome screen title */
+.Welcome-module_title__uhLqe {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* Welcome screen subtitle */
+.Welcome-module_subtitle__rL8EE {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Welcome screen buttons container */
+.Welcome-module_buttonContainer__K4GEw {
+  margin-top: 20px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+/* Welcome screen buttons */
+.Welcome-module_button__ZG0Zh {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* Style for Play button */
+.Welcome-module_button__ZG0Zh.Welcome-module_button__ZG0Zh {
+  background-color: #91726b; /* Blue background color */
+  color: #fff;
+  font-size: 20px;
+  width: 30%;
+}
+
+/* Date and wordle meta information */
+.Welcome-module_dateContainer__GTeM2 {
+  margin-top: 20px;
+}
+
+/* Date */
+.Welcome-module_date__Fmbmx {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Wordle meta information */
+.Welcome-module_wordleMeta__P_0lJ {
+  font-size: 14px;
+  color: #333;
+  margin: 5px 0;
+}
+
+/* Style for the wordle grid icon */
+.Welcome-module_icon__iYwGT {
+  width: 100px; 
+  height: 80px;
+  background-image: url('../../public/logo1.jpg'); 
+  background-size: contain; 
+  background-repeat: no-repeat; 
+  margin: 0 auto; 
+  margin-top: 20px; 
+  border-radius: 10px;
+}

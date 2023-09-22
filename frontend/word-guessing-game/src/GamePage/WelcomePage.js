@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './WelcomePage.css'; // You can create a CSS file for styling the welcome screen
+import './WelcomePage.css'; // Import the CSS file for styling the welcome screen
 
 function WelcomeScreen({ onStartGame }) {
   const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
@@ -12,16 +12,18 @@ function WelcomeScreen({ onStartGame }) {
   return (
     <div className={`welcome-screen ${showWelcomeScreen ? 'show' : 'hide'}`}>
       <div className="welcome-content">
-        <h1>Welcome to Ekreb</h1>
-        <h2>Rules:</h2>
-        <ul>
-          <li>Rule 1: Explain the first rule here.</li>
-          <li>Rule 2: Explain the second rule here.</li>
-          {/* Add more rules as needed */}
-        </ul>
-        <button className="play-button" onClick={handlePlayClick}>
-          Play
-        </button>
+        <div className="Welcome-module_icon__iYwGT"></div>
+        <h1 className="Welcome-module_title__uhLqe">Ekreb</h1>
+        <h2 className="Welcome-module_subtitle__rL8EE">Try your best at guessing unscrambled Words <span className="Welcome-module_noWrap__ThSVO"></span></h2>
+        <div className="Welcome-module_buttonContainer__K4GEw">
+          <button data-testid="Play" type="button" className="Welcome-module_button__ZG0Zh" onClick={handlePlayClick}>
+            Play
+          </button>
+        </div>
+        <div className="Welcome-module_dateContainer__GTeM2">
+          <h3 className="Welcome-module_date__Fmbmx">September 22, 2023</h3>
+          <p className="Welcome-module_wordleMeta__P_0lJ">Developed by Emre Bilge</p>
+        </div>
       </div>
     </div>
   );

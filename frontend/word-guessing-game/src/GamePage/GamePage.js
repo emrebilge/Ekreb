@@ -17,6 +17,7 @@ function GamePage() {
   const [round, setRound] = useState(1);
 
   const [gameStarted, setGameStarted] = useState(false);
+  const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
 
   // Define feedbackClass based on the content of the feedback message
   const feedbackClass = feedback.includes('Correct') ? 'green' : 'red';
@@ -66,15 +67,24 @@ function GamePage() {
   };
   
   useEffect(() => {
-    fetchRandomWord();
+    if(gameStarted){
+      fetchRandomWord();
+    }
   }, []);
 
-  const onStartGame = () => {
-    setGameStarted(true);
-  };
+  // const onStartGame = () => {
+  //   setGameStarted(true);
+  // };
 
   const toggleRules = () => {
     setShowRules(!showRules);
+  };
+
+  const handlePlayClick = () => {
+    // Start the game by hiding the welcome screen
+    setShowWelcomeScreen(false);
+    setGameStarted(true);
+    fetchRandomWord(); // Fetch initial word when starting the game
   };
 
   const handleSkip = async () => {
@@ -120,56 +130,65 @@ function GamePage() {
   };
   
   return (
-    <div> 
+  <div> 
+    {!gameStarted && showWelcomeScreen && (
+      <WelcomePage onStartGame={handlePlayClick} />
+    )}
+
+    {gameStarted && !showWelcomeScreen && (
       <div className="app-header">
+        <img src="/logo1.jpg" alt="Ekreb Logo" className="logo" />
         <h1 className="game-name">Ekreb</h1>
       </div>
-<div className="game-container">
-      <Rules showRules={showRules} toggleRules={toggleRules} />
-      <div className="game-content">
-        <div className="game-card">
-          <div className="word-container">
-            <h2 className="game-title">Guess the Word:</h2>
-            <p className="scrambled-word">Scrambled Word: {word}</p>
-            <input
-              type="text"
-              className="guess-input"
-              placeholder="Your Guess"
-              value={guess}
-              onChange={(e) => setGuess(e.target.value)}
-            />
-            <button className="button" onClick={handleSubmitGuess}>
-              Submit Guess
-            </button>
-            <button className="button hint-button" onClick={handleHint} style={{ marginLeft: '10px' }}>
-              Get Hint
-            </button>
-            {<p className="hint-message">Hint: {hint}</p>}
-          </div>
-<div className="card-container">
-  <div className="accuracy-card">
-    <h2 className="accuracy-title">Accuracy:</h2>
-    <p className="accuracy">{accuracy}%</p>
-  </div>
-  <div className="score-card">
-    <h2 className="score-title">Score:</h2>
-    <p className="score">{score}</p>
-  </div>
-</div>
-        </div>        
-      </div>
-      <p className="feedback-message" style={{ color: feedbackClass }}>
-        {feedback}
-      </p>
-      <button className="button" onClick={handleSkip}>
-       Skip Word
-      </button>
-      <button className="button reset-button" onClick={handleReset} style={{ marginLeft: '10px' }}>
-      Reset Game
-      </button>
+    )}
 
-    </div>
-    </div>
-  )};
+    {gameStarted && !showWelcomeScreen && (
+      <div className="game-container">
+        <Rules showRules={showRules} toggleRules={toggleRules} />
+        <div className="game-content">
+          <div className="game-card">
+            <div className="word-container">
+              <h2 className="game-title">Guess the Word:</h2>
+              <p className="scrambled-word">Scrambled Word: {word}</p>
+              <input
+                type="text"
+                className="guess-input"
+                placeholder="Your Guess"
+                value={guess}
+                onChange={(e) => setGuess(e.target.value)}
+              />
+              <button className="button" onClick={handleSubmitGuess}>
+                Submit Guess
+              </button>
+              <button className="button hint-button" onClick={handleHint} style={{ marginLeft: '10px' }}>
+                Get Hint
+              </button>
+              {<p className="hint-message">Hint: {hint}</p>}
+            </div>
+            <div className="card-container">
+              <div className="accuracy-card">
+                <h2 className="accuracy-title">Accuracy:</h2>
+                <p className="accuracy">{accuracy}%</p>
+              </div>
+              <div className="score-card">
+                <h2 className="score-title">Score:</h2>
+                <p className="score">{score}</p>
+              </div>
+            </div>
+          </div>        
+        </div>
+        <p className="feedback-message" style={{ color: feedbackClass }}>
+          {feedback}
+        </p>
+        <button className="button" onClick={handleSkip}>
+          Skip Word
+        </button>
+        <button className="button reset-button" onClick={handleReset} style={{ marginLeft: '10px' }}>
+          Reset Game
+        </button>
+      </div>
+    )}
+  </div>
+)};
 
 export default GamePage;
