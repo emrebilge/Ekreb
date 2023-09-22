@@ -9,7 +9,7 @@ body {
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   min-height: 100vh; /* Ensure the body covers the entire viewport height */
-  background-image: linear-gradient(to bottom, #b3e0f2, #1abc9c);
+  /* background-image: linear-gradient(to bottom, #075473, #1abc9c); */
   font-family: Arial, sans-serif;
   background-repeat: no-repeat;
   background-attachment: fixed;

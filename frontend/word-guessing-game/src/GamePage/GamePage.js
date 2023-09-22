@@ -5,12 +5,15 @@ import Rules from './Rules';
 
 function GamePage() {
   const [word, setWord] = useState('');
+  const [correctWord, setCorrectWord] = useState([]);
   const [guess, setGuess] = useState('');
   const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState('');
+  const [feedback, setFeedback] = useState("");
   const [accuracy, setAccuracy] = useState(0.00);
   const [showRules, setShowRules] = useState(false);
-
+  const [hint, setHint] = useState('');
+  const [round, setRound] = useState(1);
+  
 
   // Define feedbackClass based on the content of the feedback message
   const feedbackClass = feedback.includes('Correct') ? 'green' : 'red';
@@ -24,12 +27,14 @@ function GamePage() {
       // Assuming the backend responds with the updated score and accuracy
       setScore(response.data.score);
       setAccuracy(response.data.accuracy); 
-       
+      setRound(response.data.round); 
+
       if (response.data.message === 'Correct guess') {
         setFeedback('Correct! Well done.');  
         // Wait for 3 seconds, then fetch a new word
         setTimeout(() => {
         fetchRandomWord();
+        setHint('');
          setFeedback(''); // Clear the feedback
         }, 2000);
     } else {
@@ -45,10 +50,12 @@ function GamePage() {
   
   const fetchRandomWord = async () => {
     try {
-          // setFeedback(''); // Clear feedback
-
+      setFeedback(''); // Clear feedback
+      setHint('');
       const response = await axios.get('http://localhost:5551/get_word');
       const randomWord = response.data.scrambledWord;
+      const currentWord = response.data.currentWord;
+      setCorrectWord(currentWord[0]);
       setWord(randomWord); // Set the retrieved word in the state
     } catch (error) {
       console.error('Error fetching word:', error);
@@ -69,8 +76,17 @@ function GamePage() {
 
       setWord(response.data.scrambledWord);
       setAccuracy(response.data.accuracy);
+      setRound(response.data.round);
+      setHint('');
     } catch (error) {
       console.error('Error skipping word:', error);
+    }
+  };
+
+  const handleHint = async () => {
+    if (correctWord.length > hint.length) {
+      const nextLetter = correctWord.charAt(hint.length);
+      setHint(hint + nextLetter);
     }
   };
   
@@ -84,9 +100,10 @@ function GamePage() {
       setGuess('');
       setWord('');
       setFeedback('');
-      setAccuracy(0.0); // You might want to reset accuracy to its initial value
-      // ... Reset other state variables
-  
+      setAccuracy(0.0);
+      setHint('');
+      setRound(1);
+      
       // Fetch a new word
       await fetchRandomWord();
     } catch (error) {
@@ -95,9 +112,6 @@ function GamePage() {
     }
   };
   
-  
-  
-
   return (
 <div className="game-container">
   <Rules showRules={showRules} toggleRules={toggleRules} />
@@ -118,6 +132,11 @@ function GamePage() {
           <button className="button" onClick={handleSubmitGuess}>
             Submit Guess
           </button>
+          <button className="button hint-button" onClick={handleHint}>
+            Get Hint
+          </button>
+        {<p className="hint-message">Hint: {hint}</p>}
+        <p className="round-number">Round: {round}</p>
         </div>
         <div className="accuracy-card">
           <h2 className="accuracy-title">Accuracy:</h2>

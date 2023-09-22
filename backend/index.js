@@ -46,7 +46,7 @@ app.get('/get_word', async (req, res) => {
     const randomWord = await fetchRandomWord(); // Fetch a random word using the API
     const scrambledWord = scrambleWord(randomWord); // Scramble the word
     currentWord = randomWord;
-    res.send({ scrambledWord });
+    res.send({ scrambledWord, currentWord });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error fetching a random word from the API' });
@@ -68,18 +68,17 @@ app.post('/validate', (req, res) => {
     console.log(userGuess.toLowerCase() === currentWord[0].toLowerCase());
     if (userGuess.toLowerCase() === currentWord[0].toLowerCase()) {
       score += 10;
+      round += 1;
       correct += 1;
       correctWords.push(currentWord[0]);
       accuracy = ((correct / guesses) * 100).toFixed(2); // Convert to string
       res.status(200).send({
-        score,
-        message: 'Correct guess', accuracy
+        score, message: 'Correct guess', accuracy, round
       });
-      round = round + 1;
     } else {
       res.status(200).send({
         score,
-        message: 'Incorrect guess', accuracy
+        message: 'Incorrect guess', accuracy, round
       });
     }
   } catch (error) {
@@ -102,7 +101,7 @@ app.post('/skip_word', async (req, res) => {
     guesses += 1;
     accuracy = ((correct / guesses) * 100).toFixed(2); // Convert to string
 
-    res.status(200).send({ scrambledWord, accuracy});
+    res.status(200).send({ scrambledWord, accuracy, round});
   } catch (error) {
     console.error('Error in /skip_word:', error);
     res.status(500).json({ message: 'Internal Server Error' });
