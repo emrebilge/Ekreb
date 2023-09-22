@@ -132,9 +132,9 @@ function GamePage() {
           <button className="button" onClick={handleSubmitGuess}>
             Submit Guess
           </button>
-          <button className="button hint-button" onClick={handleHint}>
-            Get Hint
-          </button>
+          <button className="button hint-button" onClick={handleHint} style={{ marginLeft: '10px' }}>
+          Get Hint
+        </button>
         {<p className="hint-message">Hint: {hint}</p>}
         <p className="round-number">Round: {round}</p>
         </div>
