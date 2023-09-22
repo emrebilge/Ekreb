@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './GamePage.css';
 import Rules from './Rules';
+import WelcomePage from './WelcomePage';
+
 
 function GamePage() {
   const [word, setWord] = useState('');
@@ -13,7 +15,8 @@ function GamePage() {
   const [showRules, setShowRules] = useState(false);
   const [hint, setHint] = useState('');
   const [round, setRound] = useState(1);
-  
+
+  const [gameStarted, setGameStarted] = useState(false);
 
   // Define feedbackClass based on the content of the feedback message
   const feedbackClass = feedback.includes('Correct') ? 'green' : 'red';
@@ -66,6 +69,10 @@ function GamePage() {
     fetchRandomWord();
   }, []);
 
+  const onStartGame = () => {
+    setGameStarted(true);
+  };
+
   const toggleRules = () => {
     setShowRules(!showRules);
   };
@@ -113,51 +120,56 @@ function GamePage() {
   };
   
   return (
+    <div> 
+      <div className="app-header">
+        <h1 className="game-name">Ekreb</h1>
+      </div>
 <div className="game-container">
-  <Rules showRules={showRules} toggleRules={toggleRules} />
-      <header className="game-header">
-        <h1>Ekreb</h1>
-      </header>
+      <Rules showRules={showRules} toggleRules={toggleRules} />
       <div className="game-content">
         <div className="game-card">
-          <h2 className="game-title">Guess the Word:</h2>
-          <p className="scrambled-word">Scrambled Word: {word}</p>
-          <input
-            type="text"
-            className="guess-input"
-            placeholder="Your Guess"
-            value={guess}
-            onChange={(e) => setGuess(e.target.value)}
-          />
-          <button className="button" onClick={handleSubmitGuess}>
-            Submit Guess
-          </button>
-          <button className="button hint-button" onClick={handleHint} style={{ marginLeft: '10px' }}>
-          Get Hint
-        </button>
-        {<p className="hint-message">Hint: {hint}</p>}
-        <p className="round-number">Round: {round}</p>
-        </div>
-        <div className="accuracy-card">
-          <h2 className="accuracy-title">Accuracy:</h2>
-          <p className="accuracy">{accuracy}%</p>
-       </div>
-        <div className="score-card">
-          <h2 className="score-title">Score:</h2>
-          <p className="score">{score}</p>
-        </div>
+          <div className="word-container">
+            <h2 className="game-title">Guess the Word:</h2>
+            <p className="scrambled-word">Scrambled Word: {word}</p>
+            <input
+              type="text"
+              className="guess-input"
+              placeholder="Your Guess"
+              value={guess}
+              onChange={(e) => setGuess(e.target.value)}
+            />
+            <button className="button" onClick={handleSubmitGuess}>
+              Submit Guess
+            </button>
+            <button className="button hint-button" onClick={handleHint} style={{ marginLeft: '10px' }}>
+              Get Hint
+            </button>
+            {<p className="hint-message">Hint: {hint}</p>}
+          </div>
+<div className="card-container">
+  <div className="accuracy-card">
+    <h2 className="accuracy-title">Accuracy:</h2>
+    <p className="accuracy">{accuracy}%</p>
+  </div>
+  <div className="score-card">
+    <h2 className="score-title">Score:</h2>
+    <p className="score">{score}</p>
+  </div>
+</div>
+        </div>        
       </div>
       <p className="feedback-message" style={{ color: feedbackClass }}>
         {feedback}
       </p>
       <button className="button" onClick={handleSkip}>
-         Skip Word
+       Skip Word
       </button>
-      <button className="button reset-button" onClick={handleReset}>
-        Reset Game
+      <button className="button reset-button" onClick={handleReset} style={{ marginLeft: '10px' }}>
+      Reset Game
       </button>
+
     </div>
-  );  
-}
+    </div>
+  )};
 
 export default GamePage;

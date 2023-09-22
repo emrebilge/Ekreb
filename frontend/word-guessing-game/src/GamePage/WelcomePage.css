@@ -1,0 +1,71 @@
+/* WelcomeScreen.css */
+
+.welcome-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    z-index: 1000; /* Ensure the welcome screen is on top */
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none; /* Initially not clickable */
+  }
+  
+  .welcome-screen.show {
+    opacity: 1; /* Fade in when shown */
+    pointer-events: auto; /* Allow interaction */
+  }
+  
+  .welcome-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .welcome-content h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .welcome-content h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .welcome-content ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .welcome-content li {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #777;
+  }
+  
+  .play-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .play-button:hover {
+    background-color: #0056b3;
+  }
+  

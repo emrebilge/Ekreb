@@ -1,41 +1,45 @@
-.rules1{
-  background-color: #007bff; /* Blue background color */
-  color: #fff; 
-  padding: 10px 20px; 
-  border: none; 
+/* Rules button styles */
+.rules1 {
+  background-color: #3498db; /* Blue background color */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
   border-radius: 5px;
-  cursor: pointer; /* Show pointer cursor on hover */
-  font-size: 16px; /* Font size */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow */
-  transition: box-shadow 0.3s ease; /* Add a transition for smoother hover effect */
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease; /* Add a transition for smoother hover effect */
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.rules1:hover{
-  background-color: #0056b3; /* Darker blue on hover */
-  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */}
+.rules1:hover {
+  background-color: #2980b9; /* Darken the blue on hover */
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+}
 
-.rules1.hide{
-    background-color: rgb(110, 174, 252); /* Red background color */
-  }
+.rules1.hide {
+  background-color: #dc3545; /* Red background color */
+}
 
+/* Rules container styles */
 .rules-container {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .rules-title {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .rules-list {
-    list-style-type: disc;
-    padding-left: 20px;
-  }
-  
-  .rules-list li {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }  
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rules-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.rules-list {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.rules-list li {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
