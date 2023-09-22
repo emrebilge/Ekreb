@@ -22,36 +22,34 @@ function GamePage() {
   // Define feedbackClass based on the content of the feedback message
   const feedbackClass = feedback.includes('Correct') ? 'green' : 'red';
 
+  // Function to submit a guess to the backend
   const handleSubmitGuess = async () => {
     try {
       const response = await axios.post('http://localhost:5551/validate', {
         guess: guess,
       });
-  
-      // Assuming the backend responds with the updated score and accuracy
-      setScore(response.data.score);
+        setScore(response.data.score);
       setAccuracy(response.data.accuracy); 
       setRound(response.data.round); 
 
       if (response.data.message === 'Correct guess') {
         setFeedback('Correct! Well done.');  
-        // Wait for 3 seconds, then fetch a new word
         setTimeout(() => {
         fetchRandomWord();
         setHint('');
          setFeedback(''); // Clear the feedback
-        }, 2000);
+        }, 1500); // provide a wait time of 1.5 seconds before fetching a new word
     } else {
       setFeedback('Incorrect. Try again.');
     }
     } catch (error) {
-      // Handle error here
       console.error('Error submitting guess:', error);
       setFeedback('Error submitting guess. Try again.');
     }
     setGuess('');
   };
   
+  // Function to fetch a random word from the backend
   const fetchRandomWord = async () => {
     try {
       setFeedback(''); // Clear feedback
@@ -66,16 +64,14 @@ function GamePage() {
     }
   };
   
+  // Fetch a random word when the user begins the game
   useEffect(() => {
     if(gameStarted){
       fetchRandomWord();
     }
   }, []);
 
-  // const onStartGame = () => {
-  //   setGameStarted(true);
-  // };
-
+  // function to toggle the rules
   const toggleRules = () => {
     setShowRules(!showRules);
   };
@@ -87,6 +83,7 @@ function GamePage() {
     fetchRandomWord(); // Fetch initial word when starting the game
   };
 
+  // Function to handle the skip word button
   const handleSkip = async () => {
     try {
       const response = await axios.post('http://localhost:5551/skip_word');
@@ -100,6 +97,7 @@ function GamePage() {
     }
   };
 
+  // Function to handle the hint button
   const handleHint = async () => {
     if (correctWord.length > hint.length) {
       const nextLetter = correctWord.charAt(hint.length);
@@ -107,6 +105,7 @@ function GamePage() {
     }
   };
   
+  // Function to handle the reset game button
   const handleReset = async () => {
     try {
       // Send a reset request to the backend

@@ -4,11 +4,14 @@ const axios = require('axios');
 const app = express();
 const PORT = 5551;
 
+// Enable CORS
 app.use(cors());
 app.use(express.json());
 
+// API endpoint to fetch a random word
 const baseURL = 'https://random-word-api.herokuapp.com/word';
 
+// Variables to store the game state
 let round = 1;
 let score = 0;
 let guesses = 0;
@@ -19,6 +22,7 @@ let skipped = 0;
 
 let accuracy = 0;
 
+// Function to fetch a random word from the API
 async function fetchRandomWord() {
   try {
     const response = await axios.get(`${baseURL}`);
@@ -53,6 +57,7 @@ app.get('/get_word', async (req, res) => {
   }
 });
 
+// Validate the user's guess
 app.post('/validate', (req, res) => {
   console.log(req.body.guess);
   try {
@@ -87,6 +92,7 @@ app.post('/validate', (req, res) => {
   }
 });
 
+// Skip the current word
 app.post('/skip_word', async (req, res) => {
   try {
     // Make an HTTP GET request to the /get_word endpoint
@@ -108,13 +114,12 @@ app.post('/skip_word', async (req, res) => {
   }
 });
 
-
+// Retrieve the current word
 app.get('/correct_words', (req, res) => {
   res.send({ correctWords });
 });
 
-
-// end point to reset the game after the game is over 
+// Retrieve the current word
 app.post('/reset_game', (req, res) => {
   score = 0;
   accuracy = 0.00;
@@ -133,7 +138,6 @@ app.get('/accuracy', (req, res) => {
   accuracy = ((correct / guesses) * 100).toFixed(2); // Convert to string
   res.send({ accuracy });
 });
-
 
 app.listen(PORT, () => {
   console.log(`Backend is running on http://localhost:${PORT}`);
