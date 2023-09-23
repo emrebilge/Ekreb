@@ -187,7 +187,9 @@ function GamePage() {
         </button>
       </div>
     )}
+  
   </div>
+  
 )};
 
 export default GamePage;

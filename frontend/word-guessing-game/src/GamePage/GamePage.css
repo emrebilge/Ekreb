@@ -9,7 +9,7 @@
 /* Add styles for the header */
 /* Styles for the app header container */
 .app-header {
-  background-color: rgb(132, 164, 170);
+  background: linear-gradient(-45deg, #1a0037, #005c7d, #003d4e85);
   color: #fff;
   padding: 10px;
   text-align: center;
@@ -107,15 +107,7 @@
 }
 
 
-.button.hint-button {
-  background-color: #f39c12; /* Use a yellow color for hint buttons */
-  color: #fff;
-}
 
-.button.hint-button:hover {
-  background-color: #d68910; /* Darken the color on hover */
-  
-}
 
 .button.primary {
   background-color: #3498db; /* Use a blue color for primary buttons */
