@@ -43,6 +43,7 @@
     margin: 10px 0;
   }
   .end-screen-button:hover {
+    cursor: pointer;
     background-color: #583b57;
     color:white;
     transition: 0.25s;
