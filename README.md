@@ -9,7 +9,7 @@ Frontend:
    - React
    - JavaScript
    - HTML, CSS
-Backend:
+# Backend:
    - Node.JS
    - Express
    - Restful API
