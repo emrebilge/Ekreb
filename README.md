@@ -3,6 +3,14 @@
 **Email Address**: emre.e.bilge@vanderbilt.edu
 
 ## Usage
+## Prerequisites
+
+Before you can run this application, you need to have Node.js and npm (Node Package Manager) installed on your computer.
+You can check if you have Node.js using node -v in the command line
+
+- **Node.js**: You can download and install Node.js from [https://nodejs.org/](https://nodejs.org/).
+
+Once Node.js is installed, you can proceed with the following steps to run the application.
 
 To run the final product, first, navigate to a directory on your local machine where you would like to download the project by using
    cd (directory)
@@ -12,8 +20,10 @@ In the desired directory, run:
     git clone https://github.com/ChangePlusPlusVandy/change-coding-challenge-2023-emrebilge.git
 
 Navigate into the downloaded directory that you downloaded to:
-
    cd change-coding-challenge-2023-emrebilge
+
+Install the following package by running the following in the terminal:
+   npm install express
 
 To run the backend section:
     cd backend
