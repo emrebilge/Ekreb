@@ -16,6 +16,7 @@ function Rules({ showRules, toggleRules }) {
             <li>Each correct guess earns you points.</li>
             <li>Incorrect guesses won't affect your score.</li>
             <li>You can get hints, skip a word, or reset the game.</li>
+            <li>You have 45 seconds to guess the word</li>
             <li>Try to achieve the highest accuracy!</li>
           </ul>
         </div>

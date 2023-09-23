@@ -21,6 +21,10 @@ function GamePage() {
   const [gameStarted, setGameStarted] = useState(false);
   const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
   const [isGamePaused, setIsGamePaused] = useState(false);
+  const [timer, setTimer] = useState(45); // Initial timer value in seconds
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [timerIntervalId, setTimerIntervalId] = useState(null);
+
 
   // Define feedbackClass based on the content of the feedback message
   const feedbackClass = feedback.includes('Correct') ? 'green' : 'red';
@@ -59,8 +63,9 @@ function GamePage() {
           setGameStarted(false);
           setShowWelcomeScreen(true);
           // go to a page
+        
         }
-
+        setTimer(45); // Reset the timer
 
 
         }, 1500); // provide a wait time of 1.5 seconds before fetching a new word
@@ -74,6 +79,27 @@ function GamePage() {
     setGuess('');
   };
 
+  const startTimer = () => {
+    // Clear any existing timer interval
+    if (timerIntervalId) {
+      clearInterval(timerIntervalId);
+    }
+  
+    // Start a new timer interval
+    const newTimerIntervalId = setInterval(() => {
+      if (timer === 0) {
+        handleSkip();
+        clearInterval(newTimerIntervalId);
+      } else {
+        setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : prevTimer)); // Update the timer based on the previous value, but don't go below 0
+      }
+    }, 1000);
+  
+    setTimerIntervalId(newTimerIntervalId); // Store the new interval ID
+  };
+  
+  
+  
   const handlePlayAgain = () => {
     // Reset game-related states and start a new game
     setRound(1);
@@ -104,16 +130,30 @@ function GamePage() {
   
   // Fetch a random word when the user begins the game
   useEffect(() => {
-    if(round > maxRounds){
+    if (round > maxRounds) {
       setGameOver(true);
     }
-    if(gameStarted){
+    if (gameStarted) {
       fetchRandomWord();
+      startTimer(); // Start the timer when the game begins
     }
-    
-
-  }, []);
-
+  
+    return () => {
+      // Clear the timer interval when the component unmounts or when the dependencies change
+      if (timerIntervalId) {
+        clearInterval(timerIntervalId);
+      }
+    };
+  }, [round, gameStarted]);
+  
+  // useEffect to handle timer reaching zero
+  useEffect(() => {
+    if (timer === 0 && !gameOver && gameStarted) {
+      handleSkip(); // Call handleSkip when the timer reaches zero
+    }
+  }, [timer, gameOver, gameStarted]);
+  
+  
   // function to toggle the rules
   const toggleRules = () => {
     setShowRules(!showRules);
@@ -131,6 +171,7 @@ function GamePage() {
       if (round >= maxRounds) { // Check if the game is over
         setGameOver(true);
       }
+      setTimer(45);
     } catch (error) {
       console.error('Error skipping word:', error);
     }
@@ -161,7 +202,8 @@ function GamePage() {
       setHint('');
       setRound(1);
       setGameOver(false);
-  
+      setTimer(45); // Reset the timer to 45 seconds
+
       
       // Fetch a new word
       await fetchRandomWord();
@@ -175,6 +217,7 @@ function GamePage() {
     // Start the game by hiding the welcome screen
     setShowWelcomeScreen(false);
     setGameStarted(true);
+    startTimer(); // Start the timer
     fetchRandomWord(); // Fetch initial word when starting the game
   };
 
@@ -228,7 +271,10 @@ function GamePage() {
                 <p className="score">{score}</p>
               </div>
             </div>
-          </div>        
+          </div>  
+      <div className="timer-container">
+        <p className="timer">Time Left: {timer} seconds</p>
+      </div>      
         </div>
         <p className="feedback-message" style={{ color: feedbackClass }}>
           {feedback}

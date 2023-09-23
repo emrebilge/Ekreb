@@ -27,8 +27,9 @@
 }
 
 .logo {
-  width: 50px; /* Adjust the size as needed */
+  width: 80px; /* Adjust the size as needed */
   height: auto; /* Maintain aspect ratio */
+  border-radius: 10px;
 }
 
 
@@ -140,19 +141,14 @@
   color: #333;
   margin-top: 15px;
 }
-
-
-/* Accuracy and Score card styles */
-/* ... previous styles ... */
-
 /* Accuracy and Score card styles */
 .accuracy-card,
 .score-card {
   background-color: #fff;
-  padding: 10px; /* Reduce padding for smaller boxes */
+  padding: 10px; 
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  flex: 1; /* Allow the cards to share equal width within the container */
+  flex: 1; 
   margin: 0 10px; /* Add margin between the cards */
 }
 .score-card{
