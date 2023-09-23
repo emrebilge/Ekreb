@@ -2,6 +2,9 @@
 **Author**: Emre Bilge
 **Email Address**: emre.e.bilge@vanderbilt.edu
 
+Developing this project was an important milestone for me. Previously, I thought I was interested in the frontend design of websites, but as I began working on this project, I realized that the interaction between the backend and the frontend is really what intrigues me. There was a little bit of a learning curve when starting out, however, I found the Change++ workshops to be incredibly helpful to get a basic idea of how these concepts work. After these workshops, I did extensive research into how the backend is run with Node. Anyways, here is my project, Enjoy!
+
+
 ## Usage
 ## Prerequisites
 
