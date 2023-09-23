@@ -77,4 +77,5 @@ I would like to have attempted more creativity with the user design. User Interf
 
 Furthermore, I would begin to guide the user into different difficulties, maybe based on the word length. Additionally, I would have liked to implement the hints in random letters across the word rather than the next first letter. Another possible future functionality would be to add a timer, and press the user to guess each round in an allotted time.
 
+# Also my guess for the unscrambled word of Ekreb is Berke
 
