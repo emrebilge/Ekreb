@@ -2,9 +2,6 @@
 **Author**: Emre Bilge
 **Email Address**: emre.e.bilge@vanderbilt.edu
 
-Developing this project was an important milestone for me. Previously, I thought I was interested in the frontend design of websites, but as I began working on this project, I realized that the interaction between the backend and the frontend is really what intrigues me. There was a little bit of a learning curve when starting out, however, I found the Change++ workshops to be incredibly helpful to get a basic idea of how these concepts work. After these workshops, I did extensive research into how the backend is run with Node. Anyways, here is my project, Enjoy!
-
-
 ## Usage
 ## Prerequisites
 
@@ -92,3 +89,8 @@ Furthermore, I would begin to guide the user into different difficulties, maybe 
 
 # Also my guess for the unscrambled word of Ekreb is Berke
 
+# Reflection
+Prior to starting this project, I was not fully immersed in web development. Developing this project was an important milestone for me. Previously, I thought I was interested in the frontend design of websites, but as I began working on this project, I realized that the interaction between the backend and the frontend is really what intrigues me. There was a little bit of a learning curve when starting out, however, I found the Change++ workshops to be incredibly helpful to get a basic idea of how these concepts work. After these workshops, I did extensive research into how the backend is run with Node.
+Balancing this project on top of school work and other extracurricular commitments was a challenge, but something that did not deter me. I enjoyed the aspect of working in a fast-paced environment with a set deadline. This deadline allowed me to adjust my schedule around the project and work incrementally on it day by day, or really night by night.
+
+Anyways, here is my project, Enjoy!
