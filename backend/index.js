@@ -45,12 +45,16 @@ app.get('/score', (req, res) => {
   res.send({ score });
 });
 
+app.get('/current_round', (req, res) => {
+  res.send({ round });
+});
+
 app.get('/get_word', async (req, res) => {
   try {
     const randomWord = await fetchRandomWord(); // Fetch a random word using the API
     const scrambledWord = scrambleWord(randomWord); // Scramble the word
     currentWord = randomWord;
-    res.send({ scrambledWord, currentWord });
+    res.send({ scrambledWord, currentWord, round });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error fetching a random word from the API' });

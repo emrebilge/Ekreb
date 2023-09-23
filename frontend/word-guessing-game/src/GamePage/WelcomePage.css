@@ -145,6 +145,7 @@ button:hover {
 .btn:hover {
 	transition: 0.5s ease-in-out;
 	background: #8d9db6;
+  cursor: pointer;
 }
 
 .btn {
@@ -174,4 +175,28 @@ button:hover {
 	to {
 		background-position: 1000px;
 	}
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease; /* Add a transform transition */
+}
+
+/* Define a hover effect for the button */
+.btn:hover {
+  transform: scale(1.5); /* Zoom in by 5% on hover */
+}
+
+@keyframes zoomOut {
+  from {
+    transform: scale(1.5); 
+  }
+  to {
+    transform: scale(1); 
+  }
+}
+
+.btn:focus {
+  animation: zoomOut 0.2s ease alternate infinite;
 }

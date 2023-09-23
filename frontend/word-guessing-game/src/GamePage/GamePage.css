@@ -3,7 +3,6 @@
 .card-container {
   display: flex; /* Use flex display to place them side by side */
   justify-content: space-between; /* Add space between the cards */
-  margin-top: 20px;
 }
 
 /* Add styles for the header */
@@ -125,14 +124,14 @@
 }
 
 .button.secondary:hover {
-  background-color: #545b62;
+  background-color: #00152a;
 }
 
 
 /* Hint message styles */
 .hint-message {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: #333;
   margin-top: 15px;
 }

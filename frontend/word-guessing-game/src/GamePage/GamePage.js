@@ -3,7 +3,7 @@ import axios from 'axios';
 import './GamePage.css';
 import Rules from './Rules';
 import WelcomePage from './WelcomePage';
-
+import EndScreen from './EndScreen'; // Import the EndScreen component
 
 function GamePage() {
   const [word, setWord] = useState('');
@@ -15,29 +15,54 @@ function GamePage() {
   const [showRules, setShowRules] = useState(false);
   const [hint, setHint] = useState('');
   const [round, setRound] = useState(1);
+  const [gameOver, setGameOver] = useState(false);
+  const maxRounds = 6;
 
   const [gameStarted, setGameStarted] = useState(false);
   const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
+  const [isGamePaused, setIsGamePaused] = useState(false);
 
   // Define feedbackClass based on the content of the feedback message
   const feedbackClass = feedback.includes('Correct') ? 'green' : 'red';
 
   // Function to submit a guess to the backend
   const handleSubmitGuess = async () => {
+    if (isGamePaused) {
+      return; // Don't allow button click during pause
+    }
     try {
       const response = await axios.post('http://localhost:5551/validate', {
         guess: guess,
       });
-        setScore(response.data.score);
-      setAccuracy(response.data.accuracy); 
       setRound(response.data.round); 
+
+      setScore(response.data.score);
+      setAccuracy(response.data.accuracy); 
 
       if (response.data.message === 'Correct guess') {
         setFeedback('Correct! Well done.');  
+
+        setIsGamePaused(true);
+        if(round > maxRounds){
+          setGameOver(true);
+        }
         setTimeout(() => {
         fetchRandomWord();
         setHint('');
          setFeedback(''); // Clear the feedback
+        setIsGamePaused(false);
+
+        if(round < maxRounds){
+          setRound(round + 1);
+        }else{
+          setFeedback('Game Over! You guessed all words correctly.');
+          setGameStarted(false);
+          setShowWelcomeScreen(true);
+          // go to a page
+        }
+
+
+
         }, 1500); // provide a wait time of 1.5 seconds before fetching a new word
     } else {
       setFeedback('Incorrect. Try again.');
@@ -48,6 +73,15 @@ function GamePage() {
     }
     setGuess('');
   };
+
+  const handlePlayAgain = () => {
+    // Reset game-related states and start a new game
+    setRound(1);
+    setGameOver(false);
+    setAccuracy(0.00);
+    setScore(0);
+    handleReset();
+  };
   
   // Function to fetch a random word from the backend
   const fetchRandomWord = async () => {
@@ -55,6 +89,10 @@ function GamePage() {
       setFeedback(''); // Clear feedback
       setHint('');
       const response = await axios.get('http://localhost:5551/get_word');
+      const round = response.data.round;
+      if(round > maxRounds){
+        setGameOver(true);
+      }
       const randomWord = response.data.scrambledWord;
       const currentWord = response.data.currentWord;
       setCorrectWord(currentWord[0]);
@@ -66,21 +104,19 @@ function GamePage() {
   
   // Fetch a random word when the user begins the game
   useEffect(() => {
+    if(round > maxRounds){
+      setGameOver(true);
+    }
     if(gameStarted){
       fetchRandomWord();
     }
+    
+
   }, []);
 
   // function to toggle the rules
   const toggleRules = () => {
     setShowRules(!showRules);
-  };
-
-  const handlePlayClick = () => {
-    // Start the game by hiding the welcome screen
-    setShowWelcomeScreen(false);
-    setGameStarted(true);
-    fetchRandomWord(); // Fetch initial word when starting the game
   };
 
   // Function to handle the skip word button
@@ -92,6 +128,9 @@ function GamePage() {
       setAccuracy(response.data.accuracy);
       setRound(response.data.round);
       setHint('');
+      if (round >= maxRounds) { // Check if the game is over
+        setGameOver(true);
+      }
     } catch (error) {
       console.error('Error skipping word:', error);
     }
@@ -112,6 +151,8 @@ function GamePage() {
       await axios.post('http://localhost:5551/reset_game');
   
       // Reset frontend state
+      setGameStarted(true); // Set game as started
+      setShowWelcomeScreen(false); // Hide the welcome screen
       setScore(0);
       setGuess('');
       setWord('');
@@ -119,6 +160,8 @@ function GamePage() {
       setAccuracy(0.0);
       setHint('');
       setRound(1);
+      setGameOver(false);
+  
       
       // Fetch a new word
       await fetchRandomWord();
@@ -128,20 +171,29 @@ function GamePage() {
     }
   };
   
+  const handlePlayClick = () => {
+    // Start the game by hiding the welcome screen
+    setShowWelcomeScreen(false);
+    setGameStarted(true);
+    fetchRandomWord(); // Fetch initial word when starting the game
+  };
+
+  
+
   return (
   <div> 
     {!gameStarted && showWelcomeScreen && (
       <WelcomePage onStartGame={handlePlayClick} />
     )}
 
-    {gameStarted && !showWelcomeScreen && (
+    {gameStarted && !showWelcomeScreen && !gameOver && (
       <div className="app-header">
         <img src="/logo1.jpg" alt="Ekreb Logo" className="logo" />
         <h1 className="game-name">Ekreb</h1>
       </div>
     )}
 
-    {gameStarted && !showWelcomeScreen && (
+    {gameStarted && !showWelcomeScreen && !gameOver && (
       <div className="game-container">
         <Rules showRules={showRules} toggleRules={toggleRules} />
         <div className="game-content">
@@ -156,13 +208,15 @@ function GamePage() {
                 value={guess}
                 onChange={(e) => setGuess(e.target.value)}
               />
-              <button className="button" onClick={handleSubmitGuess}>
+              <button className="button" onClick={handleSubmitGuess} disabled={isGamePaused}> 
                 Submit Guess
               </button>
-              <button className="button hint-button" onClick={handleHint} style={{ marginLeft: '10px' }}>
+              <button className="button hint-button" onClick={handleHint} disabled={isGamePaused} style={{ marginLeft: '10px' }}>
                 Get Hint
               </button>
               {<p className="hint-message">Hint: {hint}</p>}
+              <p className="round-number">Round: {round}</p> {/* Display the round number */}
+
             </div>
             <div className="card-container">
               <div className="accuracy-card">
@@ -179,14 +233,18 @@ function GamePage() {
         <p className="feedback-message" style={{ color: feedbackClass }}>
           {feedback}
         </p>
-        <button className="button" onClick={handleSkip}>
+        <button className="button" onClick={handleSkip} disabled={isGamePaused}>
           Skip Word
         </button>
-        <button className="button reset-button" onClick={handleReset} style={{ marginLeft: '10px' }}>
+        <button className="button reset-button" onClick={handleReset} disabled={isGamePaused} style={{ marginLeft: '10px' }}>
           Reset Game
         </button>
       </div>
     )}
+    {gameOver && (
+        <EndScreen score={score} accuracy={accuracy} onPlayAgain={handlePlayAgain} />
+        )}
+
   
   </div>
   

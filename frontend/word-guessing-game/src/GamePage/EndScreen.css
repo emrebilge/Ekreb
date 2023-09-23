@@ -1,0 +1,60 @@
+/* EndScreen.css */
+
+/* Style the container */
+.end-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Style the content */
+  .end-screen-content {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: zoom 0.5s alternate infinite;
+  }
+  
+  /* Zoom animation */
+  @keyframes zoom {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.05); /* Adjust the scale factor as needed */
+    }
+  }
+  
+  /* Style the title */
+  .end-screen-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Style the text */
+  .end-screen-text {
+    font-size: 18px;
+    color: #666;
+    margin: 10px 0;
+  }
+/*   
+  .end-screen-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  } */
+  
+  /* .end-screen-button:hover {
+    background-color: #0056b3;
+  }
+   */
