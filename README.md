@@ -1,6 +1,18 @@
 # Ekreb Word Scramble Guessing Game
 **Author**: Emre Bilge
 **Email Address**: emre.e.bilge@vanderbilt.edu
+# Introduction:
+This project on GitHub serves as my submission for the Change++ challenge. It is a word unscrambling game where the user is prompted with a scrambled word, and has to guess the original based on it. Throughout playing the game, the score and accuracy is updated.
+
+# Technologies used:
+Frontend:
+   - React
+   - JavaScript
+   - HTML, CSS
+Backend:
+   - Node.JS
+   - Express
+   - Restful API
 
 ## Usage
 ## Prerequisites
@@ -23,15 +35,16 @@ Navigate into the downloaded directory that you downloaded to:
    cd change-coding-challenge-2023-emrebilge
 
 Install the following package by running the following in the terminal:
-   npm install express
 
 To run the backend section:
     cd backend
+    npm install
     node index.js
 
 To run the frontend, switch to the main directory.
     cd frontend
     cd word-guessing-game
+    npm install
     npm start
 
 You can access the frontend of the application by visiting http://localhost:3000/ in your web browser, while the backend can be accessed at http://localhost:5551/.
@@ -77,7 +90,11 @@ frontend
         - package.json
         - package-lock.json
      
-
+# Features:
+- There are 6 rounds that the user can play
+- The user can request a hint, displaying the next first characters of the unscrambled word
+- The user can skip the word
+- The user can reset the game
 
 ## Future Steps
 
@@ -87,10 +104,12 @@ I would like to have attempted more creativity with the user design. User Interf
 
 Furthermore, I would begin to guide the user into different difficulties, maybe based on the word length. Additionally, I would have liked to implement the hints in random letters across the word rather than the next first letter. Another possible future functionality would be to add a timer, and press the user to guess each round in an allotted time.
 
-# Also my guess for the unscrambled word of Ekreb is Berke
 
 # Reflection
 Prior to starting this project, I was not fully immersed in web development. Developing this project was an important milestone for me. Previously, I thought I was interested in the frontend design of websites, but as I began working on this project, I realized that the interaction between the backend and the frontend is really what intrigues me. There was a little bit of a learning curve when starting out, however, I found the Change++ workshops to be incredibly helpful to get a basic idea of how these concepts work. After these workshops, I did extensive research into how the backend is run with Node.
 Balancing this project on top of school work and other extracurricular commitments was a challenge, but something that did not deter me. I enjoyed the aspect of working in a fast-paced environment with a set deadline. This deadline allowed me to adjust my schedule around the project and work incrementally on it day by day, or really night by night.
+In terms of development, this project was actually very fun. I am not going to lie, I almost dropped ECE and switched completely to CS because of how much I enjoyed it. I liked this aspect of problem-solving, and it is something I can imagine myself doing on a day-to-day basis.
 
 Anyways, here is my project, Enjoy!
+
+Also my guess for the unscrambled word of Ekreb is Berke
